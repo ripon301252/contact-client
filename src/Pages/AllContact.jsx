@@ -145,11 +145,13 @@ const AllContact = ({
   };
 
   const handleEditChange = (e) => {
-    setEditData({
-      ...editData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const { name, value } = e.target;
+
+  setEditData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
   const handleDelete = (id) => {
     Swal.fire({

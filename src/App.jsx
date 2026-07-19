@@ -75,7 +75,7 @@ function App() {
 
     if (!password) return;
 
-    if (password === "12345") {
+    if (password === "12345Aa!") {
       setRole("admin");
       localStorage.setItem("role", "admin");
 
@@ -115,6 +115,7 @@ function App() {
             setPage={setPage}
             contacts={contacts}
             setEditId={setEditId}
+            setContacts={setContacts}
           />
         )}
 
