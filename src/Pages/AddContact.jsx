@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import { FaLayerGroup } from "react-icons/fa";
+import { MdOutlineDataSaverOn } from "react-icons/md";
 
 const AddContact = ({ setContacts }) => {
   const [formData, setFormData] = useState({
@@ -51,24 +53,25 @@ const AddContact = ({ setContacts }) => {
       });
   };
 
-  
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-10">
       <div className="grid md:grid-cols-2 gap-6 w-full max-w-6xl">
-        {/* 🖼️ Text Side */}
+        {/* Text Side */}
         <div className="hidden md:flex items-center justify-center rounded-xl relative overflow-hidden">
-          {/* 🔥 Gradient Glow */}
+          {/*  Gradient Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl pointer-events-none"></div>
 
-          {/* 💎 Glass Background */}
+          {/*  Glass Background */}
           <div className="absolute inset-0 backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl"></div>
 
-          {/* ✨ Content */}
+          {/*  Content */}
           <div className="relative z-10 text-center p-8">
             <h1 className="text-3xl font-bold text-white mb-4 leading-snug">
               Manage Your Contacts <br />
-              <span className="text-cyan-400">Like a Pro 🚀</span>
+              <span className="text-cyan-400 flex justify-center items-center gap-3">
+                Like a Pro
+                <FaLayerGroup className="text-3xl" />
+              </span>
             </h1>
 
             <p className="text-gray-300 text-sm mb-6">
@@ -84,15 +87,15 @@ const AddContact = ({ setContacts }) => {
           </div>
         </div>
 
-        {/* 📋 Form Side */}
+        {/*  Form Side */}
         <div className="w-full rounded-2xl relative overflow-hidden">
-          {/* 🔥 Gradient Glow Background */}
+          {/*  Gradient Glow Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl"></div>
 
-          {/* 💎 Glass Layer */}
+          {/*  Glass Layer */}
           <div className="absolute inset-0 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl"></div>
 
-          {/* ✨ Content */}
+          {/*  Content */}
           <div className="relative z-10 p-8 text-white">
             <h2 className="text-3xl font-bold text-center mb-6">
               Add <span className="text-cyan-400">Contact</span>
@@ -167,10 +170,13 @@ const AddContact = ({ setContacts }) => {
               {/* Button */}
               <button
                 className="w-full py-3 rounded-lg font-semibold text-white 
-        bg-gradient-to-r from-cyan-500 to-blue-500 
+        bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer
         hover:scale-[1.02] active:scale-[0.98] transition duration-200 shadow-lg"
               >
-                Save Contact 🚀
+                <span className="flex justify-center items-center gap-2">
+                  <MdOutlineDataSaverOn className="text-2xl" />
+                  Save Contact 
+                </span>
               </button>
             </form>
           </div>

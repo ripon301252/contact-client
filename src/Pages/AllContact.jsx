@@ -145,13 +145,13 @@ const AllContact = ({
   };
 
   const handleEditChange = (e) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
-  setEditData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
+    setEditData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -232,15 +232,15 @@ const AllContact = ({
     <div className="max-w-7xl mx-auto px-2 py-10">
       {/* Heading */}
       <div className="relative mb-6">
-        {/* 🔥 Background Glow */}
+        {/* Background Glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl rounded-xl pointer-events-none"></div>
 
-        {/* 💎 Glass Container */}
+        {/* Glass Container */}
         <div
           className="relative backdrop-blur-xl bg-white/5 border border-white/10 
   rounded-xl px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2"
         >
-          {/* 🧠 Title */}
+          {/* Title */}
           <h1
             className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 
     bg-clip-text text-transparent"
@@ -248,7 +248,7 @@ const AllContact = ({
             All Contacts
           </h1>
 
-          {/* 📊 Total */}
+          {/* Total */}
           <h2 className="text-sm md:text-base text-gray-300">
             Total Contacts:{" "}
             <span className="text-cyan-400 font-semibold">
@@ -290,23 +290,26 @@ const AllContact = ({
           <button
             onClick={handlePDF}
             className="relative px-6 py-3 rounded-xl font-semibold text-white
-      bg-gradient-to-r from-green-500 to-emerald-500 w-full
+      bg-gradient-to-r from-green-500/50 to-emerald-500 w-full
       hover:scale-105 active:scale-95 transition shadow-lg flex items-center gap-2 cursor-pointer"
           >
-            <HiOutlineDocumentArrowDown /> Export PDF
+            <span className="flex items-center gap-1">
+              <HiOutlineDocumentArrowDown className="text-xl font-semibold" />
+              Export PDF
+            </span>
           </button>
         </div>
       </div>
 
       {/* Table */}
       <div className="overflow-x-auto rounded-2xl relative">
-        {/* 🔥 Background Glow */}
+        {/* Background Glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-purple-500/10 blur-2xl pointer-events-none"></div>
 
-        {/* 💎 Glass Layer */}
+        {/*  Glass Layer */}
         <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4">
           <table className="table text-white">
-            {/* 🧠 Head */}
+            {/*  Head */}
             <thead>
               <tr className="text-gray-300 text-sm">
                 <th>No.</th>
@@ -319,7 +322,7 @@ const AllContact = ({
               </tr>
             </thead>
 
-            {/* 📋 Body */}
+            {/*  Body */}
             <tbody>
               {currentContacts.map((c, i) => (
                 <tr
@@ -349,13 +352,13 @@ const AllContact = ({
                     </div>
                   </td>
 
-                  {/* 📧 */}
+                  {/* Email */}
                   <td className="text-gray-300">{c.email}</td>
 
-                  {/* 📞 */}
+                  {/* Phone */}
                   <td className="text-gray-300">{c.phone}</td>
 
-                  {/* 🕒 */}
+                  {/* Time */}
                   <td className="text-xs text-gray-400">
                     {new Date(c.createdAt).toLocaleString()}
                   </td>
@@ -364,10 +367,10 @@ const AllContact = ({
                     {new Date(c.updatedAt).toLocaleString()}
                   </td>
 
-                  {/* ⚡ Actions */}
+                  {/*  Actions */}
                   <td>
                     <div className="flex justify-center items-center gap-2">
-                      {/* 👁 View (ALL) */}
+                      {/*  View (ALL) */}
                       <button
                         onClick={() => handleViewDetails(c._id)}
                         className="p-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500 
@@ -376,7 +379,7 @@ const AllContact = ({
                         <IoEye />
                       </button>
 
-                      {/* ✏️ Edit (ONLY ADMIN) */}
+                      {/*  Edit (ONLY ADMIN) */}
                       {role === "admin" && (
                         <button
                           onClick={() => handleEdit(c._id)}
@@ -387,7 +390,7 @@ const AllContact = ({
                         </button>
                       )}
 
-                      {/* ➕ Add (ALL) */}
+                      {/*  Add (ALL) */}
                       <button
                         onClick={() => setPage("Add Contact")}
                         className="p-2 rounded-lg bg-green-500/10 hover:bg-green-500 
@@ -396,7 +399,7 @@ const AllContact = ({
                         <MdAddToDrive />
                       </button>
 
-                      {/* 🗑 Delete (ONLY ADMIN) */}
+                      {/*  Delete (ONLY ADMIN) */}
                       {role === "admin" && (
                         <button
                           onClick={() => handleDelete(c._id)}
@@ -417,10 +420,10 @@ const AllContact = ({
 
       {/* pagination */}
       <div className="flex justify-center mt-3">
-        {/* 🔥 Glow */}
+        {/*  Glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/5 to-purple-500/10 blur-xl pointer-events-none"></div>
 
-        {/* 💎 Glass Container */}
+        {/*  Glass Container */}
         <div
           className="relative flex items-center gap-2 px-4 py-2 
   backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl"
@@ -449,13 +452,13 @@ const AllContact = ({
       {/* Modal View-Details*/}
       <dialog id="view_modal" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box relative overflow-hidden rounded-2xl p-0">
-          {/* 🔥 Background Glow */}
+          {/*  Background Glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl"></div>
 
-          {/* 💎 Glass Layer */}
+          {/*  Glass Layer */}
           <div className="absolute inset-0 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl"></div>
 
-          {/* ✨ Content */}
+          {/*  Content */}
           <div className="relative z-10 p-6 text-white">
             <h3 className="text-2xl font-bold text-center mb-5">
               Contact <span className="text-cyan-400">Details</span>
@@ -463,7 +466,7 @@ const AllContact = ({
 
             {selectedContact && (
               <div className="text-center space-y-3">
-                {/* 🖼️ Profile Image */}
+                {/*  Profile Image */}
                 <div className="flex justify-center">
                   <img
                     src={
@@ -475,12 +478,12 @@ const AllContact = ({
                   />
                 </div>
 
-                {/* 👤 Name */}
+                {/*  Name */}
                 <h2 className="text-xl font-semibold text-cyan-300">
                   {selectedContact.name}
                 </h2>
 
-                {/* 📋 Info Grid */}
+                {/*  Info Grid */}
                 <div className="grid grid-cols-1 gap-2 text-sm text-gray-300 mt-3">
                   <p>
                     <span className="text-gray-400">📧 Email:</span>{" "}
@@ -509,7 +512,7 @@ const AllContact = ({
               </div>
             )}
 
-            {/* ❌ Close Button */}
+            {/*  Close Button */}
             <div className="modal-action justify-center mt-6">
               <form method="dialog">
                 <button

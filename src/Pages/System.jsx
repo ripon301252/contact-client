@@ -1,4 +1,6 @@
 import React from "react";
+import { MdAddTask } from "react-icons/md";
+import { IoEye } from "react-icons/io5";
 
 const System = ({ contacts, setPage, setEditId }) => {
   const recentContacts = [...contacts]
@@ -9,10 +11,10 @@ const System = ({ contacts, setPage, setEditId }) => {
 
   return (
     <div className="min-h-screen px-4 md:px-10 py-16 text-white relative">
-      {/* 🔥 Background Glow */}
+      {/*  Background Glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-purple-500/10 blur-3xl"></div>
 
-      {/* 🧠 Header */}
+      {/*  Header */}
       <div className="relative text-center max-w-2xl mx-auto">
         <h1
           className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 p-2 bg-clip-text text-transparent 
@@ -26,11 +28,11 @@ const System = ({ contacts, setPage, setEditId }) => {
         </p>
       </div>
 
-      {/* 📦 Main Container */}
+      {/*  Main Container */}
       <div className="relative mt-14 flex flex-col lg:flex-row gap-10">
-        {/* 📊 LEFT */}
+        {/*  LEFT */}
         <div className="w-full lg:w-1/2 space-y-10">
-          {/* 📊 Stats */}
+          {/*  Stats */}
           <div>
             <h2 className="text-xl font-semibold text-cyan-300 mb-6">
               Contact Overview
@@ -79,7 +81,10 @@ const System = ({ contacts, setPage, setEditId }) => {
                 bg-gradient-to-r from-cyan-500 to-blue-500
                 hover:scale-105 active:scale-95 transition shadow-lg cursor-pointer"
               >
-                ➕ Add Contact
+                <span className="flex justify-center items-center gap-2">
+                  <MdAddTask className="text-2xl" />
+                  Add Contact
+                </span>
               </button>
 
               <button
@@ -87,15 +92,18 @@ const System = ({ contacts, setPage, setEditId }) => {
                 className="flex-1 py-3 rounded-xl font-semibold 
                 bg-white/10 hover:bg-white/20 border border-white/10 transition cursor-pointer"
               >
-                📋 View Contacts
+                <span className="flex justify-center items-center gap-2">
+                  <IoEye className="text-2xl" />
+                  View Contacts
+                </span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* 📋 RIGHT */}
+        {/*  RIGHT */}
         <div className="w-full lg:w-1/2 space-y-10">
-          {/* 📋 Recent Contacts */}
+          {/*  Recent Contacts */}
           <div>
             <h2 className="text-xl font-semibold text-cyan-300 mb-6 ">
               Recent Contacts
@@ -131,7 +139,7 @@ const System = ({ contacts, setPage, setEditId }) => {
             </div>
           </div>
 
-          {/* ⚡ Right Actions */}
+          {/* Right Actions */}
           <div>
             <h2 className="text-xl font-semibold text-cyan-300 mb-5">Manage</h2>
 
@@ -141,18 +149,24 @@ const System = ({ contacts, setPage, setEditId }) => {
                 className="py-3 rounded-xl font-semibold 
                 bg-gradient-to-r from-cyan-500 to-blue-500 transition hover:scale-105 cursor-pointer"
               >
-                ➕ Create Contact
+                <span className="flex justify-center items-center gap-2">
+                  <MdAddTask className="text-2xl" />
+                  Create Contact
+                </span>
               </button>
 
               <button
                 onClick={() => {
-                  setEditId(recentContacts[0]?._id); // 👈 latest contact edit
+                  setEditId(recentContacts[0]?._id); //  latest contact edit
                   setPage("All Contact");
                 }}
                 className="py-3 rounded-xl font-semibold 
                 bg-gradient-to-r from-cyan-500 to-purple-500 border border-white/10 transition hover:scale-105 cursor-pointer"
               >
-                📋 Manage Contacts
+                <span className="flex justify-center items-center gap-2">
+                  <IoEye className="text-2xl" />
+                  Manage Contacts
+                </span>
               </button>
             </div>
           </div>
