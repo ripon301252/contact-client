@@ -36,14 +36,14 @@ const Banner = ({ setPage }) => {
             <div className="absolute inset-0 flex items-center justify-center  px-4">
 
               <div className="backdrop-blur-xl bg-white/5 border border-white/10 
-              rounded-2xl p-6 md:p-10 text-center text-white max-w-2xl">
+              rounded-2xl p-6 md:p-10 text-center text-white max-w-3xl">
 
-                <h1 className="text-2xl md:text-4xl font-bold mb-3 
-                bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                  Contact Management System
+                <h1 className="text-2xl md:text-4xl font-bold mb-1 
+                bg-gradient-to-r from-cyan-400 to-blue-500 p-2 bg-clip-text text-transparent">
+                  Manage Your Contacts Smartly
                 </h1>
 
-                <p className="text-gray-300 text-sm md:text-base mb-5">
+                <p className="text-gray-300 text-sm md:text-base mb-10">
                   Manage your contacts efficiently with a modern, clean and powerful dashboard UI.
                 </p>
 
