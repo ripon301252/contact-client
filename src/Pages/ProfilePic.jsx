@@ -5,7 +5,7 @@ const ProfilePic = ({ contacts, setContacts }) => {
 
   // ✅ Fetch
   useEffect(() => {
-    fetch("/contacts")
+    fetch("https://contact-server-zs3l.onrender.com/contacts")
       .then(res => res.json())
       .then(setContacts)
       .catch(console.error);

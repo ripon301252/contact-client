@@ -60,7 +60,7 @@ const AllContact = ({
 
   // All GET
   useEffect(() => {
-    fetch("/contacts")
+    fetch("https://contact-server-zs3l.onrender.com/contacts")
       .then((res) => res.json())
       .then((api) => setContacts(api))
       .catch((err) => console.error(err));
@@ -97,7 +97,7 @@ const AllContact = ({
     }
 
     // PUT
-    fetch(`/contacts/${selectedContact._id}`, {
+    fetch(`https://contact-server-zs3l.onrender.com/contacts/${selectedContact._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -172,7 +172,7 @@ const AllContact = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`/contacts/${id}`, {
+        fetch(`https://contact-server-zs3l.onrender.com/contacts/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

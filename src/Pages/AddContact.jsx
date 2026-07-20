@@ -23,7 +23,7 @@ const AddContact = ({ setContacts }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("/contacts", {
+    fetch("https://contact-server-zs3l.onrender.com/contacts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
