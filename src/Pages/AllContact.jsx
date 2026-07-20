@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { IoEye, IoSearch, IoTrashOutline } from "react-icons/io5";
-import { FaRegEdit } from "react-icons/fa";
-import { MdAddToDrive } from "react-icons/md";
+import {
+  IoEye,
+  IoSearch,
+  IoTrashOutline,
+  IoLocationSharp,
+} from "react-icons/io5";
+import { FaRegEdit, FaPhoneAlt } from "react-icons/fa";
+import { MdAddToDrive, MdEmail, MdAccessTimeFilled } from "react-icons/md";
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
+import { RiMessage3Fill } from "react-icons/ri";
+import { GrEdit } from "react-icons/gr";
+
 
 const AllContact = ({
   contacts,
@@ -485,28 +493,33 @@ const AllContact = ({
 
                 {/*  Info Grid */}
                 <div className="grid grid-cols-1 gap-2 text-sm text-gray-300 mt-3">
-                  <p>
-                    <span className="text-gray-400">📧 Email:</span>{" "}
+                  <p className="flex justify-center items-center gap-1">
+                    <MdEmail className="text-sm" />
+                    <span className="text-gray-400">Email:</span>{" "}
                     {selectedContact.email}
                   </p>
-                  <p>
-                    <span className="text-gray-400">📞 Phone:</span>{" "}
+                  <p className="flex justify-center items-center gap-1">
+                    <FaPhoneAlt className="text-sm" />
+                    <span className="text-gray-400">Phone:</span>{" "}
                     {selectedContact.phone}
                   </p>
-                  <p>
-                    <span className="text-gray-400">📍 Address:</span>{" "}
+                  <p className="flex justify-center items-center gap-1">
+                    <IoLocationSharp className="text-sm" />
+                    <span className="text-gray-400">Address:</span>{" "}
                     {selectedContact.address}
                   </p>
 
                   {selectedContact.message && (
-                    <p>
-                      <span className="text-gray-400">💬 Message:</span>{" "}
+                    <p className="flex justify-center items-center gap-1">
+                      <RiMessage3Fill className="text-sm" />
+                      <span className="text-gray-400"> Message:</span>{" "}
                       {selectedContact.message}
                     </p>
                   )}
 
-                  <p className="text-xs text-gray-500 mt-2">
-                    🕒 {new Date(selectedContact.createdAt).toLocaleString()}
+                  <p className="text-xs text-gray-500 mt-2 flex justify-center items-center gap-1">
+                    <MdAccessTimeFilled className="text-xl" />
+                    {new Date(selectedContact.createdAt).toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -604,21 +617,26 @@ const AllContact = ({
                   <button
                     type="submit"
                     className="flex-1 py-3 rounded-lg font-semibold text-white 
-              bg-gradient-to-r from-cyan-500 to-blue-500 
-              hover:scale-[1.03] active:scale-[0.97] transition shadow-lg cursor-pointer"
+    bg-gradient-to-r from-cyan-500 to-blue-500 
+    hover:scale-[1.03] active:scale-[0.97] transition shadow-lg cursor-pointer"
                   >
-                    Update 🚀
+                    <p className="flex justify-center items-center gap-1">
+                      <GrEdit className="text-xl" />
+                      Update
+                    </p>
                   </button>
 
-                  <form method="dialog" className="flex-1">
-                    <button
-                      type="submit"
-                      className="w-full py-3 rounded-lg font-semibold text-white 
-                bg-white/10 hover:bg-white/20 transition border border-white/10 cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                  </form>
+                  {/* ✅ REMOVE form, use button */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      document.getElementById("edit_contact").close()
+                    }
+                    className="flex-1 py-3 rounded-lg font-semibold text-white 
+    bg-white/10 hover:bg-white/20 transition border border-white/10 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </form>
             )}

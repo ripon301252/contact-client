@@ -57,32 +57,46 @@ const AddContact = ({ setContacts }) => {
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4 py-10">
       <div className="grid md:grid-cols-2 gap-6 w-full max-w-6xl">
         {/* Text Side */}
-        <div className="hidden md:flex items-center justify-center rounded-xl relative overflow-hidden">
-          {/*  Gradient Glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl pointer-events-none"></div>
+        <div className="relative z-10 text-center py-32 rounded-2xl overflow-hidden">
+          {/* 🔥 Glow Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20 blur-2xl"></div>
 
-          {/*  Glass Background */}
-          <div className="absolute inset-0 backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl"></div>
+          {/* 💎 Glass Layer */}
+          <div className="absolute inset-0 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl"></div>
 
-          {/*  Content */}
-          <div className="relative z-10 text-center p-8">
-            <h1 className="text-3xl font-bold text-white mb-4 leading-snug">
+          {/* ✨ Content */}
+          <div className="relative z-10">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-4 leading-snug">
               Manage Your Contacts <br />
-              <span className="text-cyan-400 flex justify-center items-center gap-3">
+              <span className="text-cyan-400 flex justify-center items-center gap-3 mt-2">
                 Like a Pro
-                <FaLayerGroup className="text-3xl" />
+                <FaLayerGroup className="text-3xl animate-pulse" />
               </span>
             </h1>
 
-            <p className="text-gray-300 text-sm mb-6">
-              Add, organize, and access your important contacts anytime. Simple.
-              Fast. Secure.
+            <p className="text-gray-300 text-sm sm:text-base mb-6 max-w-md mx-auto">
+              Add, organize, and access your important contacts anytime.
+              <span className="text-cyan-400 font-medium"> Simple</span>,
+              <span className="text-blue-400 font-medium"> Fast</span>, and
+              <span className="text-purple-400 font-medium"> Secure</span>.
             </p>
 
-            <div className="space-y-2 text-sm text-gray-400">
-              <p>✔ Save unlimited contacts</p>
-              <p>✔ Quick search & edit</p>
-              <p>✔ Clean & modern UI</p>
+            {/* ✅ Feature Points */}
+            <div className="flex flex-col items-center gap-3 text-sm text-gray-300">
+              <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:scale-105 transition">
+                <span className="text-green-400">✔</span>
+                Save unlimited contacts
+              </div>
+
+              <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:scale-105 transition">
+                <span className="text-cyan-400">✔</span>
+                Quick search & edit
+              </div>
+
+              <div className="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-full border border-white/10 hover:scale-105 transition">
+                <span className="text-purple-400">✔</span>
+                Clean & modern UI
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +189,7 @@ const AddContact = ({ setContacts }) => {
               >
                 <span className="flex justify-center items-center gap-2">
                   <MdOutlineDataSaverOn className="text-2xl" />
-                  Save Contact 
+                  Save Contact
                 </span>
               </button>
             </form>

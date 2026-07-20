@@ -42,24 +42,24 @@ function App() {
 
   const handleAdmin = async () => {
     const { value: password } = await Swal.fire({
-      title: "Admin Login 🔐",
+      title: "Admin Login",
 
       input: "password",
       inputLabel: "Enter Admin Password",
       inputPlaceholder: "Type password here...",
 
       showCancelButton: true,
-      confirmButtonText: "Login 🚀",
+      confirmButtonText: "Login ",
       cancelButtonText: "Cancel",
 
-      // 🔥 Glass Background
+      //  Glass Background
       background: "rgba(15, 23, 42, 0.6)",
       backdrop: `
       rgba(0,0,0,0.7)
       backdrop-filter: blur(8px)
     `,
 
-      // ✨ Custom Classes
+      //  Custom Classes
       customClass: {
         popup:
           "rounded-2xl border border-white/10 backdrop-blur-xl shadow-[0_0_40px_rgba(34,211,238,0.25)]",
@@ -80,7 +80,7 @@ function App() {
       localStorage.setItem("role", "admin");
 
       Swal.fire({
-        title: "Welcome Admin 😎",
+        title: "Welcome Admin ",
         text: "Access Granted",
         icon: "success",
         background: "rgba(15, 23, 42, 0.6)",
@@ -92,7 +92,7 @@ function App() {
       });
     } else {
       Swal.fire({
-        title: "Access Denied ❌",
+        title: "Access Denied ",
         text: "Wrong Password",
         icon: "error",
         background: "rgba(15, 23, 42, 0.6)",
@@ -126,8 +126,8 @@ function App() {
             contacts={contacts}
             setContacts={setContacts}
             setPage={setPage}
-            editId={editId} // 👈 add
-            setEditId={setEditId} // 👈 optional but useful
+            editId={editId} //  add
+            setEditId={setEditId} //  optional but useful
             role={role}
           />
         )}
