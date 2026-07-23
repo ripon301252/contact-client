@@ -242,7 +242,7 @@ const AddContact = ({ setContacts }) => {
                   ) : (
                     <>
                       <MdOutlineDataSaverOn className="text-2xl" />
-                      Save Contact
+                      Save 
                     </>
                   )}
                 </span>

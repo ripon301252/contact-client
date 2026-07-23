@@ -134,14 +134,6 @@ function App() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#020617]">
-        <span className="loading loading-bars loading-xl text-cyan-400"></span>
-      </div>
-    );
-  }
-
   return (
     <>
       <Navbar setPage={setPage} page={page} handleAdmin={handleAdmin} />
