@@ -110,7 +110,7 @@ function App() {
 
     if (!password) return;
 
-    if (password === "12345Aa!") {
+    if (password === import.meta.env.VITE_ADMIN_PASS) {
       setRole("admin");
       localStorage.setItem("role", "admin");
 
