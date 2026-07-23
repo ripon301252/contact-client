@@ -14,10 +14,10 @@ const System = ({ contacts, setPage, setEditId, loading }) => {
     return (
       <div className="min-h-screen px-4 md:px-10 py-16 animate-pulse space-y-10">
         {/* Header */}
-        <div className="text-center space-y-3">
+        {/* <div className="text-center space-y-3">
           <div className="h-10 w-72 mx-auto bg-white/10 rounded"></div>
           <div className="h-4 w-96 mx-auto bg-white/10 rounded"></div>
-        </div>
+        </div> */}
 
         {/* Main */}
         <div className="flex flex-col lg:flex-row gap-10 mt-10">

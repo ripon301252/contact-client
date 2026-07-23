@@ -25,6 +25,7 @@ function App() {
   //     .finally(() => setLoading(false));
   // }, []);
 
+
   useEffect(() => {
     const loadContacts = async () => {
       setLoading(true);
@@ -33,15 +34,20 @@ function App() {
           "https://contact-server-zs3l.onrender.com/contacts",
         );
         const data = await res.json();
-        setContacts(data);
+
+        // ✅ শুধু একবার setLoading(false)
+        setTimeout(() => {
+          setContacts(data);
+          setLoading(false);
+        }, 500);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false); // ✅ always stop
+        setLoading(false);
       }
     };
+
     loadContacts();
-  }, [setContacts]);
+  }, []);
 
   useEffect(() => {
     const savedRole = localStorage.getItem("role");
@@ -134,6 +140,7 @@ function App() {
     }
   };
 
+ 
   return (
     <>
       <Navbar setPage={setPage} page={page} handleAdmin={handleAdmin} />
