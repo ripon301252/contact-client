@@ -14,14 +14,14 @@ import { HiOutlineDocumentArrowDown } from "react-icons/hi2";
 import { RiMessage3Fill } from "react-icons/ri";
 import { GrEdit } from "react-icons/gr";
 
-
 const AllContact = ({
   contacts,
   setContacts,
-  setPage,
   editId,
   setEditId,
   role,
+  loading,
+  setPage,
 }) => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [editData, setEditData] = useState({});
@@ -58,14 +58,6 @@ const AllContact = ({
     setCurrentPage(1);
   }, [search]);
 
-  // All GET
-  useEffect(() => {
-    fetch("https://contact-server-zs3l.onrender.com/contacts")
-      .then((res) => res.json())
-      .then((api) => setContacts(api))
-      .catch((err) => console.error(err));
-  }, [setContacts]);
-
   const getChangedFields = () => {
     const changed = [];
 
@@ -80,30 +72,32 @@ const AllContact = ({
 
   const handleUpdate = (e) => {
     e.preventDefault();
-
     const changedFields = getChangedFields();
-
     //  No change hole API call bondho
     if (changedFields.length === 0) {
+      document.getElementById("edit_contact").close();
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "info",
         title: "No changes",
-        showConfirmButton: false,
-        timer: 2200,
+        // showConfirmButton: false,
+        // timer: 2200,
         text: "You didn't update anything ",
       });
       return;
     }
 
     // PUT
-    fetch(`https://contact-server-zs3l.onrender.com/contacts/${selectedContact._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    fetch(
+      `https://contact-server-zs3l.onrender.com/contacts/${selectedContact._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editData),
       },
-      body: JSON.stringify(editData),
-    })
+    )
       .then((res) => res.json())
       .then((data) => {
         // Swal.fire({
@@ -120,7 +114,7 @@ const AllContact = ({
             : `<span style="color:#06b6d4; font-weight:600">${changedFields.join(", ")}</span> updated successfully`;
 
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           html: message, // use html for color
         });
@@ -208,6 +202,8 @@ const AllContact = ({
   // Export PDF
   const handlePDF = () => {
     const doc = new jsPDF("landscape");
+
+    doc.setFontSize(14);
     doc.text("Contact Management System - All Contact Report", 14, 10);
 
     const tableColumn = [
@@ -215,26 +211,84 @@ const AllContact = ({
       "Email",
       "Phone",
       "Address",
-      "Create-Time",
-      "Update-Time",
+      "Created",
+      "Updated",
     ];
+
     const tableRows = contacts.map((contact) => [
       contact.name,
       contact.email,
       contact.phone,
       contact.address,
-      contact.createdAt,
-      contact.updatedAt,
-      new Date(contact.createdAt).toLocaleDateString(),
+
+      // ✅ সুন্দর date format
+      new Date(contact.createdAt).toLocaleString("en-BD", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+
+      new Date(contact.updatedAt).toLocaleString("en-BD", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     ]);
 
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
       startY: 20,
+      styles: {
+        fontSize: 9,
+      },
+      headStyles: {
+        fillColor: [6, 182, 212], // cyan
+      },
     });
+
     doc.save("all_contact.pdf");
   };
+
+  if (loading) {
+    return (
+      <div className="p-6 animate-pulse space-y-6">
+        {/* Search bar */}
+        <div className="h-10 w-full md:w-1/3 bg-white/10 rounded-lg"></div>
+
+        {/* Table Header */}
+        <div className="grid grid-cols-5 gap-4">
+          <div className="h-4 bg-white/10 rounded"></div>
+          <div className="h-4 bg-white/10 rounded"></div>
+          <div className="h-4 bg-white/10 rounded"></div>
+          <div className="h-4 bg-white/10 rounded"></div>
+          <div className="h-4 bg-white/10 rounded"></div>
+        </div>
+
+        {/* Table Rows */}
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div key={i} className="grid grid-cols-5 gap-4 items-center">
+            <div className="h-4 bg-white/10 rounded"></div>
+            <div className="h-4 bg-white/10 rounded"></div>
+            <div className="h-4 bg-white/10 rounded"></div>
+            <div className="h-4 bg-white/10 rounded"></div>
+            <div className="h-8 bg-white/10 rounded-lg"></div>
+          </div>
+        ))}
+
+        {/* Pagination */}
+        <div className="flex justify-center gap-2 mt-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="w-10 h-10 bg-white/10 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-2 py-10">
@@ -315,115 +369,134 @@ const AllContact = ({
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-purple-500/10 blur-2xl pointer-events-none"></div>
 
         {/*  Glass Layer */}
-        <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4">
-          <table className="table text-white">
-            {/*  Head */}
-            <thead>
-              <tr className="text-gray-300 text-sm">
-                <th>No.</th>
-                <th>User</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th className="text-center">Action</th>
-              </tr>
-            </thead>
-
-            {/*  Body */}
-            <tbody>
-              {currentContacts.map((c, i) => (
-                <tr
-                  key={c._id}
-                  className="hover:bg-white/5 transition duration-200"
-                >
-                  <th className="text-gray-400">{indexOfFirst + i + 1}</th>
-
-                  {/* 👤 User */}
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="h-12 w-12 rounded-xl border border-cyan-400/40">
-                          <img
-                            src={c.image || "https://i.ibb.co/2kR7b6d/user.png"}
-                            alt="user"
-                            className="object-cover"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-semibold text-cyan-300">
-                          {c.name}
-                        </div>
-                        <div className="text-xs text-gray-400">{c.address}</div>
-                      </div>
-                    </div>
-                  </td>
-
-                  {/* Email */}
-                  <td className="text-gray-300">{c.email}</td>
-
-                  {/* Phone */}
-                  <td className="text-gray-300">{c.phone}</td>
-
-                  {/* Time */}
-                  <td className="text-xs text-gray-400">
-                    {new Date(c.createdAt).toLocaleString()}
-                  </td>
-
-                  <td className="text-xs text-gray-400">
-                    {new Date(c.updatedAt).toLocaleString()}
-                  </td>
-
-                  {/*  Actions */}
-                  <td>
-                    <div className="flex justify-center items-center gap-2">
-                      {/*  View (ALL) */}
-                      <button
-                        onClick={() => handleViewDetails(c._id)}
-                        className="p-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500 
-      hover:text-black transition cursor-pointer"
-                      >
-                        <IoEye />
-                      </button>
-
-                      {/*  Edit (ONLY ADMIN) */}
-                      {role === "admin" && (
-                        <button
-                          onClick={() => handleEdit(c._id)}
-                          className="p-2 rounded-lg bg-blue-500/10 hover:bg-blue-500 
-        hover:text-black transition cursor-pointer"
-                        >
-                          <FaRegEdit />
-                        </button>
-                      )}
-
-                      {/*  Add (ALL) */}
-                      <button
-                        onClick={() => setPage("Add Contact")}
-                        className="p-2 rounded-lg bg-green-500/10 hover:bg-green-500 
-      hover:text-black transition cursor-pointer"
-                      >
-                        <MdAddToDrive />
-                      </button>
-
-                      {/*  Delete (ONLY ADMIN) */}
-                      {role === "admin" && (
-                        <button
-                          onClick={() => handleDelete(c._id)}
-                          className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500 
-        hover:text-black transition cursor-pointer"
-                        >
-                          <IoTrashOutline />
-                        </button>
-                      )}
-                    </div>
-                  </td>
+        {loading ? (
+          // <div className="flex justify-center py-20">
+          //   <span className="loading loading-bars loading-xl"></span>
+          // </div>
+          // ============================
+          <div className="space-y-3">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="h-10 bg-white/10 animate-pulse rounded"
+              ></div>
+            ))}
+          </div>
+        ) : (
+          <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4">
+            <table className="table text-white">
+              {/*  Head */}
+              <thead>
+                <tr className="text-gray-300 text-sm">
+                  <th>No.</th>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Created</th>
+                  <th>Updated</th>
+                  <th className="text-center">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+
+              {/*  Body */}
+              <tbody>
+                {currentContacts.map((c, i) => (
+                  <tr
+                    key={c._id}
+                    className="hover:bg-white/5 transition duration-200"
+                  >
+                    <th className="text-gray-400">{indexOfFirst + i + 1}</th>
+
+                    {/* 👤 User */}
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="h-12 w-12 rounded-xl border border-cyan-400/40">
+                            <img
+                              src={
+                                c.image || "https://i.ibb.co/2kR7b6d/user.png"
+                              }
+                              alt="user"
+                              className="object-cover"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-semibold text-cyan-300">
+                            {c.name}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {c.address}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Email */}
+                    <td className="text-gray-300">{c.email}</td>
+
+                    {/* Phone */}
+                    <td className="text-gray-300">{c.phone}</td>
+
+                    {/* Time */}
+                    <td className="text-xs text-gray-400">
+                      {new Date(c.createdAt).toLocaleString()}
+                    </td>
+
+                    <td className="text-xs text-gray-400">
+                      {new Date(c.updatedAt).toLocaleString()}
+                    </td>
+
+                    {/*  Actions */}
+                    <td>
+                      <div className="flex justify-center items-center gap-2">
+                        {/*  View (ALL) */}
+                        <button
+                          onClick={() => handleViewDetails(c._id)}
+                          className="p-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500 
+      hover:text-black transition cursor-pointer"
+                        >
+                          <IoEye />
+                        </button>
+
+                        {/*  Edit (ONLY ADMIN) */}
+                        {role === "admin" && (
+                          <button
+                            onClick={() => handleEdit(c._id)}
+                            className="p-2 rounded-lg bg-blue-500/10 hover:bg-blue-500 
+        hover:text-black transition cursor-pointer"
+                          >
+                            <FaRegEdit />
+                          </button>
+                        )}
+
+                        {/*  Add (ALL) */}
+                        <button
+                          onClick={() => setPage("Add Contact")}
+                          className="p-2 rounded-lg bg-green-500/10 hover:bg-green-500 
+      hover:text-black transition cursor-pointer"
+                        >
+                          <MdAddToDrive />
+                        </button>
+
+                        {/*  Delete (ONLY ADMIN) */}
+                        {role === "admin" && (
+                          <button
+                            onClick={() => handleDelete(c._id)}
+                            className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500 
+        hover:text-black transition cursor-pointer"
+                          >
+                            <IoTrashOutline />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* pagination */}

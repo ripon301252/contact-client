@@ -230,7 +230,7 @@ const AddContact = ({ setContacts }) => {
               {/* Button */}
               <button
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 transition 
+                className={`w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 transition cursor-pointer
                   duration-200 shadow-lg ${loading ? "opacity-70 cursor-not-allowed" : "hover:scale-[1.02] active:scale-[0.98]"}`}
               >
                 <span className="flex justify-center items-center gap-2">

@@ -1,13 +1,79 @@
-import React from "react";
+import React, {} from "react";
 import { MdAddTask } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
 
-const System = ({ contacts, setPage, setEditId }) => {
+const System = ({ contacts, setPage, setEditId, loading }) => {
+
   const recentContacts = [...contacts]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 3);
 
   const saveEmails = contacts.filter((contact) => contact.email);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen px-4 md:px-10 py-16 animate-pulse space-y-10">
+        {/* Header */}
+        <div className="text-center space-y-3">
+          <div className="h-10 w-72 mx-auto bg-white/10 rounded"></div>
+          <div className="h-4 w-96 mx-auto bg-white/10 rounded"></div>
+        </div>
+
+        {/* Main */}
+        <div className="flex flex-col lg:flex-row gap-10 mt-10">
+          {/* LEFT */}
+          <div className="w-full lg:w-1/2 space-y-10">
+            {/* Stats */}
+            <div className="space-y-5">
+              <div className="h-6 w-40 bg-white/10 rounded"></div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div className="h-24 bg-white/10 rounded-xl"></div>
+                <div className="h-24 bg-white/10 rounded-xl"></div>
+                <div className="h-24 bg-white/10 rounded-xl"></div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="space-y-4">
+              <div className="h-6 w-40 bg-white/10 rounded"></div>
+
+              <div className="flex gap-4">
+                <div className="flex-1 h-12 bg-white/10 rounded-xl"></div>
+                <div className="flex-1 h-12 bg-white/10 rounded-xl"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div className="w-full lg:w-1/2 space-y-10">
+            {/* Recent */}
+            <div className="space-y-4">
+              <div className="h-6 w-40 bg-white/10 rounded"></div>
+
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/10 rounded-full"></div>
+                  <div className="space-y-2 w-full">
+                    <div className="h-4 w-1/2 bg-white/10 rounded"></div>
+                    <div className="h-3 w-2/3 bg-white/10 rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Manage */}
+            <div className="space-y-4">
+              <div className="h-6 w-32 bg-white/10 rounded"></div>
+
+              <div className="h-12 bg-white/10 rounded-xl"></div>
+              <div className="h-12 bg-white/10 rounded-xl"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen px-4 md:px-10 py-16 text-white relative">

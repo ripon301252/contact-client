@@ -5,10 +5,17 @@ import b1 from "../assets/b1.jpg";
 import b2 from "../assets/b2.jpg";
 import b3 from "../assets/b3.jpg";
 
-const Banner = ({ setPage }) => {
+const Banner = ({ setPage, loading }) => {
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <span className="loading loading-bars loading-xl text-cyan-400"></span>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
-
       <Carousel
         autoPlay
         infiniteLoop
@@ -18,10 +25,8 @@ const Banner = ({ setPage }) => {
         swipeable
         showIndicators={true}
       >
-
         {[b1, b2, b3].map((img, i) => (
           <div key={i} className="relative">
-
             {/* 🖼 Image */}
             <img
               src={img}
@@ -34,22 +39,24 @@ const Banner = ({ setPage }) => {
 
             {/* 💎 Glass Content */}
             <div className="absolute inset-0 flex items-center justify-center  px-4">
-
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 
-              rounded-2xl p-6 md:p-10 text-center text-white max-w-3xl">
-
-                <h1 className="text-2xl md:text-4xl font-bold mb-1 
-                bg-gradient-to-r from-cyan-400 to-blue-500 p-2 bg-clip-text text-transparent">
+              <div
+                className="backdrop-blur-xl bg-white/5 border border-white/10 
+              rounded-2xl p-6 md:p-10 text-center text-white max-w-3xl"
+              >
+                <h1
+                  className="text-2xl md:text-4xl font-bold mb-1 
+                bg-gradient-to-r from-cyan-400 to-blue-500 p-2 bg-clip-text text-transparent"
+                >
                   Manage Your Contacts Smartly
                 </h1>
 
                 <p className="text-gray-300 text-sm md:text-base mb-10">
-                  Manage your contacts efficiently with a modern, clean and powerful dashboard UI.
+                  Manage your contacts efficiently with a modern, clean and
+                  powerful dashboard UI.
                 </p>
 
                 {/* ⚡ Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-
                   <button
                     onClick={() => setPage("All Contact")}
                     className="px-6 py-3 rounded-lg font-semibold 
@@ -66,15 +73,11 @@ const Banner = ({ setPage }) => {
                   >
                     Add Contact
                   </button>
-
                 </div>
-
               </div>
             </div>
-
           </div>
         ))}
-
       </Carousel>
     </div>
   );

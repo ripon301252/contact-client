@@ -13,6 +13,35 @@ function App() {
   const [contacts, setContacts] = useState([]);
   const [editId, setEditId] = useState(null);
   const [role, setRole] = useState("member");
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   fetch("https://contact-server-zs3l.onrender.com/contacts")
+  //     .then((res) => res.json())
+  //     .then((data) => setContacts(data))
+  //     .catch(console.error)
+  //     .finally(() => setLoading(false));
+  // }, []);
+
+  useEffect(() => {
+    const loadContacts = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          "https://contact-server-zs3l.onrender.com/contacts",
+        );
+        const data = await res.json();
+        setContacts(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false); // ✅ always stop
+      }
+    };
+    loadContacts();
+  }, [setContacts]);
 
   useEffect(() => {
     const savedRole = localStorage.getItem("role");
@@ -105,6 +134,14 @@ function App() {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#020617]">
+        <span className="loading loading-bars loading-xl text-cyan-400"></span>
+      </div>
+    );
+  }
+
   return (
     <>
       <Navbar setPage={setPage} page={page} handleAdmin={handleAdmin} />
@@ -116,6 +153,7 @@ function App() {
             contacts={contacts}
             setEditId={setEditId}
             setContacts={setContacts}
+            loading={loading}
           />
         )}
 
@@ -125,10 +163,11 @@ function App() {
           <AllContact
             contacts={contacts}
             setContacts={setContacts}
-            setPage={setPage}
-            editId={editId} //  add
-            setEditId={setEditId} //  optional but useful
+            editId={editId}
+            setEditId={setEditId}
             role={role}
+            loading={loading}
+            setPage={setPage}
           />
         )}
       </div>
