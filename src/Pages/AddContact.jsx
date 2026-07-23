@@ -4,6 +4,7 @@ import { FaLayerGroup } from "react-icons/fa";
 import { MdOutlineDataSaverOn } from "react-icons/md";
 
 const AddContact = ({ setContacts }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,37 +21,81 @@ const AddContact = ({ setContacts }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch("https://contact-server-zs3l.onrender.com/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // alert("Saved ✅");
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your contact has been saved",
-          showConfirmButton: false,
-          timer: 2200,
-        });
-        setContacts((prev) => [...prev, data]);
-
-        setFormData({
-          name: "",
-          email: "",
-          image: "",
-          phone: "",
-          address: "",
-          message: "",
-        });
+    // empty field check
+    if (
+      !formData.name.trim() ||
+      !formData.phone.trim() ||
+      !formData.address.trim()
+    ) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Please fill all required fields ⚠️",
       });
+    }
+
+    // email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    if (!emailRegex.test(formData.email.trim())) {
+      return Swal.fire({
+        icon: "error",
+        title: "Invalid Email ",
+        text: "Please enter a valid email address",
+      });
+    }
+
+    // API call
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        "https://contact-server-zs3l.onrender.com/contacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      const data = await res.json();
+
+      // 🔥 important check
+      if (!res.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      //  success
+      Swal.fire({
+        icon: "success",
+        title: "Contact Saved Successfully ",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      setContacts((prev) => [...prev, data]);
+
+      setFormData({
+        name: "",
+        email: "",
+        image: "",
+        phone: "",
+        address: "",
+        message: "",
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed ❌",
+        text: err.message,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -129,6 +174,7 @@ const AddContact = ({ setContacts }) => {
 
               {/* Email */}
               <input
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -183,13 +229,22 @@ const AddContact = ({ setContacts }) => {
 
               {/* Button */}
               <button
-                className="w-full py-3 rounded-lg font-semibold text-white 
-        bg-gradient-to-r from-cyan-500 to-blue-500 cursor-pointer
-        hover:scale-[1.02] active:scale-[0.98] transition duration-200 shadow-lg"
+                disabled={loading}
+                className={`w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-cyan-500 to-blue-500 transition 
+                  duration-200 shadow-lg ${loading ? "opacity-70 cursor-not-allowed" : "hover:scale-[1.02] active:scale-[0.98]"}`}
               >
                 <span className="flex justify-center items-center gap-2">
-                  <MdOutlineDataSaverOn className="text-2xl" />
-                  Save Contact
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Saving...
+                    </span>
+                  ) : (
+                    <>
+                      <MdOutlineDataSaverOn className="text-2xl" />
+                      Save Contact
+                    </>
+                  )}
                 </span>
               </button>
             </form>
